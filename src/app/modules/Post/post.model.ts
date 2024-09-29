@@ -13,10 +13,17 @@ const PostSchema: Schema = new Schema<IPost>(
   {
     title: { type: String, required: true },
     postDetails: { type: String, required: true },
-    author: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    category: { type: String, required: true },
+    author:  {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    category: { type: String,enum: ["Vegetables", "Flowers", "Landscaping", "Herb","Indoor","Fruits"],required: true},
     isPremium: { type: Boolean, default: false },
-    images: [{ type: String }],
+    images: {
+      type: [String],
+      default: [],
+    },
     upVotes: { type: Number, default: 0 },
     downVotes: { type: Number, default: 0 },
     upvotedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
@@ -27,3 +34,4 @@ const PostSchema: Schema = new Schema<IPost>(
 );
 
 export const Post = mongoose.model<IPost & Document>("Post", PostSchema);
+

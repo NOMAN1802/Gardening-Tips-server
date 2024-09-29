@@ -1,13 +1,21 @@
+import mongoose from "mongoose";
 import { z } from "zod";
 
 const createPostSchema = z.object({
   body: z.object({
     title: z.string().min(1).max(100),
     postDetails: z.string().min(1),
-    author: z.string({ required_error: "Author is required" }),
-    category: z.string(),
-    isPremium: z.boolean(),
-    images: z.array(z.string().url()),
+    author: z
+    .string({
+      required_error: 'Category is required',
+    })
+    .refine((val) => {
+      return mongoose.Types.ObjectId.isValid(val);
+    }), 
+    category: z.enum(["Vegetables", "Flowers", "Landscaping", "Herb", "Indoor", "Fruits"]), 
+    isPremium: z.boolean().optional(), 
+    image: z.string().optional(),
+     
   }),
 });
 
@@ -15,16 +23,16 @@ const updatePostSchema = z.object({
   body: z.object({
     title: z.string().min(1).max(100).optional(),
     postDetails: z.string().min(1).optional(),
-    category: z.string().optional(),
+    category: z.enum(["Vegetables", "Flowers", "Landscaping", "Herb", "Indoor", "Fruits"]).optional(),
     isPremium: z.boolean().optional(),
-    images: z.array(z.string().url()).optional(),
+    images: z.array(z.string()).optional(),
   }),
 });
 
 const commentSchema = z.object({
   body: z.object({
     content: z.string().min(1),
-    commentator: z.string({ required_error: "Commentator is required" }),
+    commentator: z.string({ required_error: "Commentator is required" }), 
   }),
 });
 

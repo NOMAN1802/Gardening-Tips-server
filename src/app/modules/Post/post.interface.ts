@@ -1,12 +1,12 @@
-import { Types } from "mongoose";
+import { ObjectId, Types } from "mongoose";
 
 export type IPost = {
   title: string;
   postDetails: string;
-  author: Types.ObjectId;
-  category: string;
+  author: ObjectId;
+  category: "Vegetables" | "Flowers" | "Landscaping" | "Herb" | "Indoor" | "Fruits"; 
   isPremium: boolean;
-  images: string[];
+  images?: string[];
   upVotes: number;
   downVotes: number;
   upvotedBy: Types.ObjectId[];
@@ -18,3 +18,7 @@ export type IComment = {
   content: string;
   commentator: Types.ObjectId;
 };
+
+
+
+
