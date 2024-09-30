@@ -31,9 +31,15 @@ const deletePost = async (id: string): Promise<boolean> => {
 };
 
 const getPost = async (id: string): Promise<IPost | null> => {
-  const result = await Post.findById(id).populate("author");
+  const result = await Post.findById(id)
+    .populate("author")
+    .populate({
+      path: "comments.commentator",
+      select: "name"
+    });
   return result;
 };
+
 
 const getPosts = async (
   query: Record<string, unknown>

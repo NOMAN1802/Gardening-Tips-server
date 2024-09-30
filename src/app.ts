@@ -6,8 +6,8 @@ import express, { Application, NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import config from './app/config';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
-import notFound from './app/middlewares/notFound';
 import routes from './app/routes';
+import notFound from './app/middlewares/notFound';
 
 
 const app: Application = express();
@@ -37,11 +37,16 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
   });
 });
 
+
+
 //global error handler
 app.use(globalErrorHandler);
 
 
-app.use(notFound);  
+// Not found 
+
+app.use(notFound)
 
 
 export default app;
+

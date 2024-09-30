@@ -43,13 +43,6 @@ router.post(
   PostController.addComment
 );
 
-router.post(
-  "/:id/vote",
-
-  validateRequest(postValidations.voteSchema),
-  PostController.vote
-);
-
 router.patch(
   "/:postId/comments/:commentId",
 
@@ -58,5 +51,14 @@ router.patch(
 );
 
 router.delete("/:postId/comments/:commentId", PostController.deleteComment);
+
+router.post(
+  "/:id/vote",
+
+  validateRequest(postValidations.voteSchema),
+  PostController.vote
+);
+
+
 
 export const postRoutes = router;

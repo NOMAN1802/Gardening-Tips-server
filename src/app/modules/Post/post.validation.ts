@@ -36,17 +36,19 @@ const commentSchema = z.object({
   }),
 });
 
+const editCommentSchema = z.object({
+  body: z.object({
+    content: z.string().min(1).optional(),
+  }),
+});
+
+
 const voteSchema = z.object({
   body: z.object({
     voteType: z.enum(["upvote", "downvote"]),
   }),
 });
 
-const editCommentSchema = z.object({
-  body: z.object({
-    content: z.string().min(1).optional(),
-  }),
-});
 
 export const postValidations = {
   createPostSchema,
