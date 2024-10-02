@@ -59,6 +59,6 @@ router.post(
   PostController.vote
 );
 
-
+router.get("/user/:id", auth(USER_ROLE.USER), PostController.getPostsByUser);
 
 export const postRoutes = router;

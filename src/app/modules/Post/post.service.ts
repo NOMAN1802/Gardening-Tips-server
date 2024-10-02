@@ -174,6 +174,13 @@ const deleteComment = async (
   return result;
 };
 
+const getPostsByUser = async (userId: string): Promise<IPost[] | null> => {
+  const result = await Post.find({ author: userId })
+    .populate("author")
+    .sort({ createdAt: -1 });
+  return result;
+};
+
 export const PostServices = {
   createPost,
   updatePost,
@@ -184,4 +191,5 @@ export const PostServices = {
   vote,
   editComment,
   deleteComment,
+  getPostsByUser,
 };

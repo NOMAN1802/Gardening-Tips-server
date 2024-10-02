@@ -166,6 +166,16 @@ const deleteComment = catchAsync(async (req, res) => {
   });
 });
 
+const getPostsByUser = catchAsync(async (req, res) => {
+  const result = await PostServices.getPostsByUser(req.params.id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User Posts retrieved successfully",
+    data: result,
+  });
+});
+
 export const PostController = {
   createPost,
   updatePost,
@@ -176,4 +186,5 @@ export const PostController = {
   vote,
   editComment,
   deleteComment,
+  getPostsByUser
 };

@@ -58,19 +58,6 @@ const unfollowUser = catchAsync(async (req, res) => {
 });
 
 
-const verifyUser = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = await UserServices.verifyUser(id);
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "User verified successfully",
-    data: result,
-  });
-});
-
-
 const favoritePost = catchAsync(async (req, res) => {
   const { userId } = req.body;
   const postId = req.params.id;
@@ -114,7 +101,17 @@ const getUserFavoritesPosts = catchAsync(
     });
   }
 );
+const verifyUser = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await UserServices.verifyUser(id);
 
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User verified successfully",
+    data: result,
+  });
+});
 export const UserControllers = {
   getSingleUser,
   getAllUsers,
@@ -122,5 +119,6 @@ export const UserControllers = {
   unfollowUser,
   favoritePost,
   unfavoritePost,
-  getUserFavoritesPosts
+  getUserFavoritesPosts,
+  verifyUser
 };

@@ -13,7 +13,7 @@ router.get('/', UserControllers.getAllUsers);
 router.get('/:id', UserControllers.getSingleUser);
 router.post("/follow/:id", UserControllers.followUser);
 router.post("/unfollow/:id", UserControllers.unfollowUser);
-// router.post("/verify/:id", UserControllers.verifyUser);
+router.post("/verify/:id", UserControllers.verifyUser);
 router.post("/favorite/:id", UserControllers.favoritePost);
 router.post("/unfavorite/:id", UserControllers.unfavoritePost);
 router.get("/favorites/:id", UserControllers.getUserFavoritesPosts);
