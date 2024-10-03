@@ -19,9 +19,10 @@ router.post(
   PostController.createPost
 );
 
-router.patch(
-  "/update-post/:id",
-
+router.put(
+  "/update-post/:id",auth(USER_ROLE.USER),multerUpload.fields([{ name: 'postImages' }]),
+  validateImageFileRequest(ImageFilesArrayZodSchema),
+  parseBody,
   validateRequest(postValidations.updatePostSchema),
   PostController.updatePost
 );

@@ -3,11 +3,11 @@ import { z } from "zod";
 
 const createPostSchema = z.object({
   body: z.object({
-    title: z.string().min(1).max(100),
+    title: z.string().min(1).max(500),
     postDetails: z.string().min(1),
     author: z
     .string({
-      required_error: 'Category is required',
+      required_error: 'Author is required',
     })
     .refine((val) => {
       return mongoose.Types.ObjectId.isValid(val);
@@ -21,7 +21,7 @@ const createPostSchema = z.object({
 
 const updatePostSchema = z.object({
   body: z.object({
-    title: z.string().min(1).max(100).optional(),
+    title: z.string().min(1).max(500).optional(),
     postDetails: z.string().min(1).optional(),
     category: z.enum(["Vegetables", "Flowers", "Landscaping", "Herb", "Indoor", "Fruits"]).optional(),
     isPremium: z.boolean().optional(),

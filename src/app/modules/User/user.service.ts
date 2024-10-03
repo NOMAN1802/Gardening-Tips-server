@@ -1,4 +1,5 @@
 import { QueryBuilder } from '../../builder/QueryBuilder';
+import { initiatePayment } from '../Payment/payment.utils';
 import { Post } from '../Post/post.model';
 import { UserSearchableFields } from './user.constant';
 import { TUser } from './user.interface';
@@ -71,7 +72,21 @@ const verifyUser = async (id: string) => {
   }
 
   // Initiate payment
-  // ! TODO PAYMEMT <--->
+
+  const paymentData = {
+    transactionId: `TRXN-${id}-${Date.now()}`,
+    totalAmount: "200",
+    customerName: user.name,
+    customerEmail: user.email,
+    customerPhone: user.mobileNumber,
+  };
+  console.log(paymentData);
+
+  const paymentSession = await initiatePayment(paymentData);
+  console.log(paymentSession);
+  
+
+  return paymentSession;
 };
 
 const favoritePost = async (userId: string, postId: string) => {
