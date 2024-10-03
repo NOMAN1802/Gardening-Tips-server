@@ -11,7 +11,7 @@ const getAllUsers = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'Users Retrieved Successfully',
+    message: 'All Users Retrieved Successfully',
     data: users,
   });
 });
@@ -103,7 +103,7 @@ const getUserFavoritesPosts = catchAsync(
 );
 const verifyUser = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await UserServices.verifyUser(id);
+  const result = await UserServices.VerifyUserToDB(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

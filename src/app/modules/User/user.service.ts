@@ -53,7 +53,7 @@ const unfollowUser = async (followerId: string, followingId: string) => {
   return result;
 };
 
-const verifyUser = async (id: string) => {
+const VerifyUserToDB = async (id: string) => {
   // Check if the user has at least one post with 5 or more upvotes
   const eligiblePost = await Post.findOne({ author: id, upVotes: { $gte: 1 } });
 
@@ -119,7 +119,7 @@ export const UserServices = {
   getSingleUserFromDB,
   followUser,
   unfollowUser,
-  verifyUser,
+  VerifyUserToDB,
   favoritePost,
   unfavoritePost,
   getUserFavorites,

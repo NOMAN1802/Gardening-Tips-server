@@ -19,7 +19,7 @@ router.post(
   PostController.createPost
 );
 
-router.put(
+router.patch(
   "/update-post/:id",auth(USER_ROLE.USER),multerUpload.fields([{ name: 'postImages' }]),
   validateImageFileRequest(ImageFilesArrayZodSchema),
   parseBody,
@@ -28,7 +28,7 @@ router.put(
 );
 
 router.delete(
-  "/:id",
+  "/delete-post/:id",
 
   PostController.deletePost
 );

@@ -8,6 +8,7 @@ import config from './app/config';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import routes from './app/routes';
 import notFound from './app/middlewares/notFound';
+import path from 'path';
 
 
 const app: Application = express();
@@ -24,7 +25,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use('/api/v1', routes);
 
