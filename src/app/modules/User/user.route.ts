@@ -9,7 +9,7 @@ const router = express.Router();
 
 
 
-router.get('/',auth(USER_ROLE.ADMIN), UserControllers.getAllUsers);
+router.get('/',auth(USER_ROLE.ADMIN, USER_ROLE.USER), UserControllers.getAllUsers);
 router.get('/:id', UserControllers.getSingleUser);
 router.post("/follow/:id", UserControllers.followUser);
 router.post("/unfollow/:id", UserControllers.unfollowUser);

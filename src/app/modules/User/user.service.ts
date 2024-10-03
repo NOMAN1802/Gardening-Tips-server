@@ -55,11 +55,11 @@ const unfollowUser = async (followerId: string, followingId: string) => {
 
 const VerifyUserToDB = async (id: string) => {
   // Check if the user has at least one post with 5 or more upvotes
-  const eligiblePost = await Post.findOne({ author: id, upVotes: { $gte: 1 } });
+  // const eligiblePost = await Post.findOne({ author: id, upVotes: { $gte: 5 } });
 
-  if (!eligiblePost) {
-    throw new Error("User is not eligible for verification");
-  }
+  // if (!eligiblePost) {
+  //   throw new Error("User is not eligible for verification");
+  // }
 
   const user = await User.findById(id);
 
@@ -75,7 +75,7 @@ const VerifyUserToDB = async (id: string) => {
 
   const paymentData = {
     transactionId: `TRXN-${id}-${Date.now()}`,
-    totalAmount: "200",
+    totalAmount: "999",
     customerName: user.name,
     customerEmail: user.email,
     customerPhone: user.mobileNumber,
