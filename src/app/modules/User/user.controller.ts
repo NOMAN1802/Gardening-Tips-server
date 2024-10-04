@@ -33,7 +33,7 @@ const followUser = catchAsync(async (req, res) => {
   const { followerId } = req.body;
   const followingId = req.params.id;
 
-  const result = await UserServices.followUser(followerId, followingId);
+  const result = await UserServices.followUserToDB(followerId, followingId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -47,7 +47,7 @@ const unfollowUser = catchAsync(async (req, res) => {
   const { followerId } = req.body;
   const followingId = req.params.id;
 
-  const result = await UserServices.unfollowUser(followerId, followingId);
+  const result = await UserServices.unfollowUserToDB(followerId, followingId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -62,7 +62,7 @@ const favoritePost = catchAsync(async (req, res) => {
   const { userId } = req.body;
   const postId = req.params.id;
 
-  const result = await UserServices.favoritePost(userId, postId);
+  const result = await UserServices.favoritePostToDB(userId, postId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -77,7 +77,7 @@ const unfavoritePost = catchAsync(async (req, res) => {
   const { userId } = req.body;
   const postId = req.params.id;
 
-  const result = await UserServices.unfavoritePost(userId, postId);
+  const result = await UserServices.unfavoritePostToDB(userId, postId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -91,7 +91,7 @@ const getUserFavoritesPosts = catchAsync(
   async (req, res) => {
     const userId = req.params.id;
 
-    const result = await UserServices.getUserFavorites(userId);
+    const result = await UserServices.getUserFavoritesFromBd(userId);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,

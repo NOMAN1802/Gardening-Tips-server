@@ -1,6 +1,5 @@
-/* eslint-disable no-useless-escape */
-import bcryptjs from 'bcryptjs';
-import { Schema, model } from 'mongoose';
+
+import bcryptjs from 'bcryptjs';import { Schema, model } from 'mongoose';
 import config from '../../config';
 import { USER_ROLE, USER_STATUS } from './user.constant';
 import { IUserModel, TUser } from './user.interface';
@@ -19,7 +18,6 @@ const userSchema = new Schema<TUser, IUserModel>(
     email: {
       type: String,
       required: true,
-      //validate email
       match: [
         /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
         'Please fill a valid email address',
@@ -58,7 +56,7 @@ const userSchema = new Schema<TUser, IUserModel>(
 );
 
 userSchema.pre('save', async function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  
   const user = this; // doc
   // hashing password and save into DB
 
@@ -70,7 +68,7 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// set '' after saving password
+
 userSchema.post('save', function (doc, next) {
   doc.password = '';
   next();
