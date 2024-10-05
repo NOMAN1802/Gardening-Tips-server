@@ -88,10 +88,9 @@ const unfavoritePost = catchAsync(async (req, res) => {
 });
 
 const getUserFavoritesPosts = catchAsync(
-  async (req, res) => {
-    const userId = req.params.id;
+  async (req, res) => 
 
-    const result = await UserServices.getUserFavoritesFromBd(userId);
+    const result = await UserServices.getUserFavoritesFromBd(req.params.id);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
