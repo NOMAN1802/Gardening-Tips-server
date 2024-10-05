@@ -107,6 +107,8 @@ const vote = catchAsync(async (req, res) => {
   });
 });
 
+
+
 const editComment = catchAsync(async (req, res) => {
   const { postId, commentId } = req.params;
   const { content, userId } = req.body;
@@ -186,5 +188,6 @@ export const PostController = {
   vote,
   editComment,
   deleteComment,
-  getPostsByUser
+  getPostsByUser,
+
 };

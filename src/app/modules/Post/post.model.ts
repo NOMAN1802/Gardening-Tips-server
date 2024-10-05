@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { IPost, IComment } from "./post.interface";
+import { User } from "../User/user.model";
 
 const CommentSchema: Schema = new Schema<IComment>(
   {
@@ -32,6 +33,19 @@ const PostSchema: Schema = new Schema<IPost>(
   },
   { timestamps: true }
 );
+
+// Middleware to increment upvote count in associated user
+PostSchema.post('save', async function (doc) {
+  try {
+    await User.findByIdAndUpdate(doc.author, {
+      $inc: { upVoteCount: 1 },
+    });
+  } catch (error) {
+    throw new Error(
+      `Failed to increment upvoteCount count for User ${doc.author}: ${error}`
+    );
+  }
+});
 
 export const Post = mongoose.model<IPost & Document>("Post", PostSchema);
 

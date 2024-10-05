@@ -19,6 +19,14 @@ app.use(
     origin: [config.client_url as string],
   })
 );
+
+// app.use(cors({
+//   origin: 'http://localhost:3000', 
+//   credentials: true,
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// }));
+
+
 app.use(cookieParser());
 
 //parser

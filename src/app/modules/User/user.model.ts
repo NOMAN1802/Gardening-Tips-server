@@ -4,6 +4,7 @@ import config from '../../config';
 import { USER_ROLE, USER_STATUS } from './user.constant';
 import { IUserModel, TUser } from './user.interface';
 
+
 const userSchema = new Schema<TUser, IUserModel>(
   {
     name: {
@@ -32,6 +33,10 @@ const userSchema = new Schema<TUser, IUserModel>(
       type: String,
       enum: Object.keys(USER_STATUS),
       default: USER_STATUS.ACTIVE,
+    },
+    upVoteCount: {
+      type: Number,
+      default: 0,
     },
     passwordChangedAt: {
       type: Date,
@@ -93,5 +98,7 @@ userSchema.statics.isJWTIssuedBeforePasswordChanged = function (
     new Date(passwordChangedTimestamp).getTime() / 1000;
   return passwordChangedTime > jwtIssuedTimestamp;
 };
+
+
 
 export const User = model<TUser, IUserModel>('User', userSchema);

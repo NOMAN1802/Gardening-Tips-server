@@ -44,7 +44,7 @@ const getPost = async (id: string): Promise<IPost | null> => {
 const getPosts = async (
   query: Record<string, unknown>
 ): Promise<{ posts: IPost[]; total: number; page: number; limit: number }> => {
-  const searchableFields = ["title", "content"];
+  const searchableFields = ["title", "postDetails","category"];
   const postQuery = new QueryBuilder(Post.find().populate("author"), query)
     .search(searchableFields)
     .filter()
@@ -96,11 +96,11 @@ const vote = async (
 
   if (voteType === "upvote") {
     if (hasUpvoted) {
-      // User already upvoted, so remove the upvote
+    
       post.upVotes--;
       post.upvotedBy = post.upvotedBy.filter((id) => id.toString() !== userId);
     } else {
-      // Add upvote and remove downvote if exists
+      
       post.upVotes++;
       post.upvotedBy.push(new Types.ObjectId(userId));
       if (hasDownvoted) {
