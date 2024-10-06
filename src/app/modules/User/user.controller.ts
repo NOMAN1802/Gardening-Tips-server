@@ -88,7 +88,8 @@ const unfavoritePost = catchAsync(async (req, res) => {
 });
 
 const getUserFavoritesPosts = catchAsync(
-  async (req, res) => 
+  async (req, res) => {
+
 
     const result = await UserServices.getUserFavoritesFromBd(req.params.id);
 
@@ -111,6 +112,44 @@ const verifyUser = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+const getUserById = catchAsync(async (req, res) => {
+  const result = await UserServices.getUserByIdFromDB(req.params.id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User retrieved successfully",
+    data: result,
+  });
+});
+
+const updateUser = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+
+  const currentUser = await UserServices.getUserByIdFromDB(id);
+
+  if (!currentUser) {
+    return sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: "User not found",
+      data: null,
+    });
+  }
+  const mergedData = { ...currentUser.toObject(), ...updateData };
+  const result = await UserServices.updateUserInToDB(id, mergedData);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Your profile updated successfully",
+    data: result,
+  });
+});
+
+
+
 export const UserControllers = {
   getSingleUser,
   getAllUsers,
@@ -119,5 +158,7 @@ export const UserControllers = {
   favoritePost,
   unfavoritePost,
   getUserFavoritesPosts,
-  verifyUser
+  verifyUser,
+  getUserById,
+  updateUser,
 };

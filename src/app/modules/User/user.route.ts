@@ -9,8 +9,8 @@ const router = express.Router();
 
 
 
-// router.get('/',auth(USER_ROLE.ADMIN, USER_ROLE.USER), UserControllers.getAllUsers);
-router.get('/', UserControllers.getAllUsers);
+router.get('/',auth(USER_ROLE.ADMIN, USER_ROLE.USER), UserControllers.getAllUsers);
+
 router.get('/:id', UserControllers.getSingleUser);
 router.post("/follow/:id", UserControllers.followUser);
 router.post("/unfollow/:id", UserControllers.unfollowUser);
@@ -18,6 +18,16 @@ router.post("/verify/:id", auth(USER_ROLE.USER), UserControllers.verifyUser);
 router.post("/favorite/:id", UserControllers.favoritePost);
 router.post("/unfavorite/:id", UserControllers.unfavoritePost);
 router.get("/favorites/:id", UserControllers.getUserFavoritesPosts);
-
+router.get(
+  "/singleUser/:id",
+  auth(USER_ROLE.ADMIN, USER_ROLE.USER),
+  UserControllers.getUserById
+);
+router.put(
+    "/updateProfile/:id",
+    auth(USER_ROLE.ADMIN, USER_ROLE.USER),
+    validateRequest(UserValidation.updateUserValidationSchema),
+    UserControllers.updateUser
+  );
 
 export const UserRoutes = router;

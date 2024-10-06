@@ -114,6 +114,24 @@ const getUserFavoritesFromBd = async (userId: string) => {
   const result = await User.findById(userId).populate("favoritesPosts");
   return result?.favoritesPosts;
 };
+
+const getUserByIdFromDB = async (id: string) => {
+  const result = await User.findById(id)
+    .populate("followers")
+    .populate("following");
+  return result;
+};
+
+
+const updateUserInToDB = async (id: string, payload: Partial<TUser>) => {
+  const result = await User.findByIdAndUpdate(
+    id,
+    { $set: payload },
+    { new: true, runValidators: true }
+  ).select("-password");
+
+  return result;
+};
 export const UserServices = {
   
   getAllUsersFromDB,
@@ -124,4 +142,6 @@ export const UserServices = {
   favoritePostToDB,
   unfavoritePostToDB,
   getUserFavoritesFromBd,
+  updateUserInToDB,
+  getUserByIdFromDB
 };
