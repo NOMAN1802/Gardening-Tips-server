@@ -42,6 +42,14 @@ const confirmationService = async (transactionId: string) => {
   }
 };
 
+const getPaymentHistoryFromDB = async () => {
+  const paymentHistory = await Payment.find().populate("userId");
+  return paymentHistory;
+};
+
+
+
 export const paymentServices = {
   confirmationService,
+  getPaymentHistoryFromDB,
 };
