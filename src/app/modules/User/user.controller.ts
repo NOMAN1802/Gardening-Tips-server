@@ -123,9 +123,10 @@ const getUserById = catchAsync(async (req, res) => {
   });
 });
 
-const updateUser = catchAsync(async (req, res) => {
+const changeUserStatus = catchAsync(async (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
+
 
   const currentUser = await UserServices.getUserByIdFromDB(id);
 
@@ -137,17 +138,17 @@ const updateUser = catchAsync(async (req, res) => {
       data: null,
     });
   }
-  const mergedData = { ...currentUser.toObject(), ...updateData };
-  const result = await UserServices.updateUserInToDB(id, mergedData);
+ 
+ const mergedData = { ...currentUser.toObject(), ...updateData };
+ const result = await UserServices.changeUserStatusInToDB(id, mergedData);
 
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Your profile updated successfully",
-    data: result,
-  });
+ sendResponse(res, {
+   statusCode: httpStatus.OK,
+   success: true,
+   message: "User status updated successfully",
+   data: result,
+ });
 });
-
 
 
 export const UserControllers = {
@@ -160,5 +161,5 @@ export const UserControllers = {
   getUserFavoritesPosts,
   verifyUser,
   getUserById,
-  updateUser,
+  changeUserStatus
 };

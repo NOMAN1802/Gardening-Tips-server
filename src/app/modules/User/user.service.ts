@@ -122,14 +122,12 @@ const getUserByIdFromDB = async (id: string) => {
   return result;
 };
 
-
-const updateUserInToDB = async (id: string, payload: Partial<TUser>) => {
+const changeUserStatusInToDB = async (id: string, payload: Partial<TUser>) => {
   const result = await User.findByIdAndUpdate(
     id,
     { $set: payload },
     { new: true, runValidators: true }
-  ).select("-password");
-
+  );
   return result;
 };
 export const UserServices = {
@@ -142,6 +140,6 @@ export const UserServices = {
   favoritePostToDB,
   unfavoritePostToDB,
   getUserFavoritesFromBd,
-  updateUserInToDB,
-  getUserByIdFromDB
+  getUserByIdFromDB,
+  changeUserStatusInToDB
 };

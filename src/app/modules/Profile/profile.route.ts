@@ -19,6 +19,7 @@ router.patch(
     multerUpload.single('profilePhoto'),
     parseBody,
     ProfileController.updateMyProfile
-)
+);
+
 
 export const ProfileRoutes = router;
