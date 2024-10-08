@@ -28,7 +28,7 @@ async function bootstrap() {
   try {
     await mongoose.connect(config.db_url as string);
     console.log('🛢 Database connected successfully');
-    await seed();
+    // await seed();
     server = app.listen(config.port, () => {
       console.log(`🌸 Gardening Tips is running on port ${config.port}`);
     });
