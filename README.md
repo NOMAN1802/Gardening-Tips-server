@@ -77,7 +77,7 @@
 #### Start the server
 
 ```bash
-  npm run start:dev
+  npm run dev
 ```
 
 #### Install  nesessary package and dependency needed for the project
