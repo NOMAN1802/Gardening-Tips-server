@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
+ 
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import AppError from '../errors/AppError';
 import { USER_ROLE, USER_STATUS } from '../modules/User/user.constant';
@@ -27,7 +27,9 @@ export const verifyToken = (
 ): JwtPayload | Error => {
   try {
     return jwt.verify(token, secret) as JwtPayload;
-  } catch (error: any) {
+  } catch (error) {
+    console.log(error)
     throw new AppError(401, 'You are not authorized!');
+    
   }
 };

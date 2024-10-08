@@ -1,4 +1,5 @@
-
+ /*eslint-disable @typescript-eslint/no-this-alias */
+ 
 import bcryptjs from 'bcryptjs';import { Schema, model } from 'mongoose';
 import config from '../../config';
 import { USER_ROLE, USER_STATUS } from './user.constant';
@@ -19,10 +20,7 @@ const userSchema = new Schema<TUser, IUserModel>(
     email: {
       type: String,
       required: true,
-      match: [
-        /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
-        'Please fill a valid email address',
-      ],
+   
     },
     password: {
       type: String,
@@ -62,7 +60,7 @@ const userSchema = new Schema<TUser, IUserModel>(
 
 userSchema.pre('save', async function (next) {
   
-  const user = this; // doc
+  const user = this; 
   // hashing password and save into DB
 
   user.password = await bcryptjs.hash(

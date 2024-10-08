@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 import dotenv from "dotenv";
 
@@ -29,6 +32,7 @@ export const initiatePayment = async (paymentData: any) => {
 
     return response.data;
   } catch (err) {
+    console.log(err)
     throw new Error("Payment initiation failed!");
   }
 };
