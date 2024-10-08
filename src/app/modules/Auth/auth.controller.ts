@@ -46,14 +46,25 @@ const loginUser = catchAsync(async (req, res) => {
   });
 });
 
-const changePassword = catchAsync(async (req, res) => {
-  const { ...passwordData } = req.body;
+// const changePassword = catchAsync(async (req, res) => {
+//   const { ...passwordData } = req.body;
 
-  const result = await AuthServices.changePassword(req.user, passwordData);
+//   const result = await AuthServices.changePassword(req.user, passwordData);
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: 'Password updated successfully!',
+//     data: result,
+//   });
+// });
+
+const changePassword = catchAsync(async (req, res) => {
+  const { id, password } = req.body;
+  const result = await AuthServices.changePassword(id, password);
   sendResponse(res, {
-    statusCode: httpStatus.OK,
     success: true,
-    message: 'Password updated successfully!',
+    statusCode: httpStatus.OK,
+    message: "Password changed successfully",
     data: result,
   });
 });

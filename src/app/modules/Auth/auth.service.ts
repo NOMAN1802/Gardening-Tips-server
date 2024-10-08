@@ -101,50 +101,40 @@ const loginUser = async (payload: TLoginUser) => {
   };
 };
 
-const changePassword = async (
-  userData: JwtPayload,
-  payload: { oldPassword: string; newPassword: string }
-) => {
-  // checking if the user is exist
-  const user = await User.isUserExistsByEmail(userData.email);
 
-  if (!user) {
-    throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!');
+const changePassword = async (id: string, password: string) => {
+  if (!id || !password) {
+    throw new AppError(httpStatus.BAD_REQUEST, "User ID and new password are required");
   }
 
-  // checking if the user is blocked
-
-  const userStatus = user?.status;
-
-  if (userStatus === 'BLOCKED') {
-    throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked!');
+  // Hash the new password
+  const saltRounds = Number(config.bcrypt_salt_rounds);
+  if (isNaN(saltRounds)) {
+    throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, "Invalid bcrypt salt rounds configuration");
   }
 
-  //checking if the password is correct
+  try {
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-  if (!(await User.isPasswordMatched(payload.oldPassword, user?.password)))
-    throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched');
+    // Update the user with the hashed password
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { password: hashedPassword },
+      { new: true }
+    );
 
-  //hash new password
-  const newHashedPassword = await bcrypt.hash(
-    payload.newPassword,
-    Number(config.bcrypt_salt_rounds)
-  );
-
-  await User.findOneAndUpdate(
-    {
-      email: userData.email,
-      role: userData.role,
-    },
-    {
-      password: newHashedPassword,
-      passwordChangedAt: new Date(),
+    if (!updatedUser) {
+      throw new AppError(httpStatus.NOT_FOUND, "User not found");
     }
-  );
 
-  return null;
+    return updatedUser;
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    }
+    throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to change password");
+  }
 };
-
 const refreshToken = async (token: string) => {
   // checking if the given token is valid
   const decoded = jwt.verify(
